@@ -1,0 +1,79 @@
+
+<body>
+  <div class="container">
+    <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+      <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+        <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"/></svg>
+        <span class="fs-4">Concert</span>
+      </a>
+
+      <ul class="nav nav-pills">
+        <li class="nav-item"><a href="#" class="nav-link active" aria-current="page">Home</a></li>
+        <li class="nav-item"><a href="/dashboard" class="nav-link">Atualizar</a></li>
+        <li class="nav-item"><a href="/criacao" class="nav-link">Nova pessoa</a></li>
+        <li class="nav-item"><a href="/edicao" class="nav-link">Editar pessoa</a></li>
+      </ul>
+    </header>
+  </div>
+  <div class="container">
+      <div class="card list-person">
+        <h5 class="card-header">Lista de cadastrados</h5>
+        <div class="card-body">
+          <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Id</th>
+                  <th scope="col">Nome</th>
+                  <th scope="col">Sobrenome</th>
+                  <th scope="col">email</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let person of persons">
+                  <td>{{person.id}}</td>
+                  <td>{{person.nome}}</td>
+                  <td>{{person.sobrenome}}</td>
+                  <td>{{person.email}}</td>
+                  <td>
+                    <button type="button" class="btn btn-warning btn-sm" (click)="editPerson(person)">Editar</button>
+                    <button type="button" class="btn btn-danger btn-sm ml-1" (click)="deletePerson(person)">Deletar</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+        </div>
+      </div>
+    
+      <div class="card add-person">
+          <h5 class="card-header">Adicionar/Atualizar cadastro</h5>
+          <div class="card-body">
+              <form id="add-form" (ngSubmit)="f.form.valid && savePerson(f)" #f="ngForm" novalidate>
+                <div class="form-group">
+                    <label for="nome">Nome</label>
+                    <input type="text" [(ngModel)]="person.nome" id="nome" name="nome" #nome="ngModel" required class="form-control" [ngClass]="{ 'is-invalid': f.submitted && nome.invalid }" placeholder="Digite o nome">
+                    <div *ngIf="f.submitted && nome.invalid" class="invalid-feedback">
+                        <div *ngIf="nome.errors?.required">Nome é obrigatório</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="color">Sobrenome</label>
+                    <input type="text" [(ngModel)]="person.sobrenome" id="color" name="color" #color="ngModel" required class="form-control" [ngClass]="{ 'is-invalid': f.submitted && color.invalid }" placeholder="Digite o sobrenome">
+                    <div *ngIf="f.submitted && color.invalid" class="invalid-feedback">
+                        <div *ngIf="color.errors?.required">Sobrenome é obrigatório</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="price">Email</label>
+                    <input type="text" [(ngModel)]="person.email" id="price" name="price" #price="ngModel" required class="form-control" [ngClass]="{ 'is-invalid': f.submitted && price.invalid }" placeholder="Digite o email">
+                    <div *ngIf="f.submitted && price.invalid" class="invalid-feedback">
+                        <div *ngIf="price.errors?.required">Email é obrigatório</div>
+                    </div>
+                </div>
+                <button type="submit" (click)="handleSuccess()" class="btn btn-primary btn-add-person">Salvar</button>
+                <button type="reset" class="btn btn-secondary btn-add-person" (click)="cleanForm(f)">Cancelar</button>
+              </form>
+          </div>
+        </div>
+    </div>
+</body>
+  
